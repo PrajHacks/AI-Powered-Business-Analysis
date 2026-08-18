@@ -2,7 +2,7 @@
 
 **Business Intelligence, Locally**
 
-Connect any database — or upload a CSV — and ask questions in plain English. DataWise introspects your schema at runtime, generates SQL with a local LLM, validates it as strictly read-only, runs it, and turns the results into a plain-English answer with an auto-generated chart. No API keys, no cloud, no per-query billing. Everything runs on your machine.
+Connect any database or upload a CSV  and ask questions in plain English. DataWise introspects your schema at runtime, generates SQL with a local LLM, validates it as strictly read-only, runs it, and turns the results into a plain-English answer with an auto-generated chart. No API keys, no cloud, no per-query billing. Everything runs on your machine.
 
 ---
 
