@@ -11,6 +11,27 @@
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
 </head>
 <body class="is-landing">
+
+  <!-- ── Static Demo Notice Banner ──────────────────────────── -->
+  <div id="demo-banner" class="demo-banner">
+    <div class="demo-banner-inner">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.9">
+        <circle cx="7.5" cy="7.5" r="6.5"/>
+        <line x1="7.5" y1="5" x2="7.5" y2="7.5"/>
+        <circle cx="7.5" cy="10" r="0.6" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="demo-banner-text">
+        <strong>Static Demo</strong> — Live LLM inference isn't running here. Hosting a local AI model 24/7 costs money, and as a student that's not feasible right now.
+        CSV upload &amp; schema introspection are fully live. Questions use pre-recorded verified examples.
+      </span>
+      <button class="demo-banner-close" onclick="document.getElementById('demo-banner').style.display='none'" title="Dismiss" aria-label="Dismiss banner">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="1" y1="1" x2="10" y2="10"/><line x1="10" y1="1" x2="1" y2="10"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
   <div id="app">
 
     <!-- ── Header ─────────────────────────────────────────── -->
