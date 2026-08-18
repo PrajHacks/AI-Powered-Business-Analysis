@@ -137,8 +137,3 @@ Response times vary with question complexity: a few seconds for simple aggregati
 - Proper login/auth flow
 - Persistent storage for connections, conversation history, and feedback
 
----
-
-## License
-
-_Add your chosen license here._
