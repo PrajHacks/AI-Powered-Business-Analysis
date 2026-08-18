@@ -113,7 +113,7 @@ Full local inference requires a persistent server with the LLM loaded in memory 
 - API + frontend on a lightweight always-on host (e.g. Render)
 - Ollama on a small dedicated VPS (a 2 vCPU / 4GB instance is sufficient for `llama3.2:3b` — providers like Hetzner offer this in the ~$5/month range), with a reverse proxy enforcing an API key so the inference endpoint isn't open to the public internet
 
-**`vercel-demo/`** in this repo contains a free, fully static+serverless demo deployment: CSV upload, live schema introspection, and hand-written SQL execution/charting all run for real via Vercel serverless functions (reusing the same validated backend logic). Natural-language question answering — which requires an always-on LLM — is demonstrated via pre-recorded real examples instead, clearly labeled as such, since running that live isn't possible within a free serverless architecture. See `vercel-demo/README.md` for details.
+**`(https://data-wise-psi.vercel.app/)`** in this repo contains a free, fully static+serverless demo deployment: CSV upload, live schema introspection, and hand-written SQL execution/charting all run for real via Vercel serverless functions (reusing the same validated backend logic). Natural-language question answering — which requires an always-on LLM — is demonstrated via pre-recorded real examples instead, clearly labeled as such, since running that live isn't possible within a free serverless architecture. See `https://data-wise-psi.vercel.app/' for details.
 
 ### CPU inference performance
 
