@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Environment/secrets
+.env
+*.env.local
+
+# Local data / temp SQLite files created by CSV uploads
+ai-business-analyst/data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Vercel local project config (machine-specific, not to be committed)
+vercel-demo/.vercel/
+**/.vercel/
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node (in case any tooling adds this later)
+node_modules/
