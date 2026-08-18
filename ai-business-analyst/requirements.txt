@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+pymysql
+pandas
+python-multipart
+pydantic-settings
+pytest
+httpx
+sqlparse
+plotly

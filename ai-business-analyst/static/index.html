@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DataWise — AI Business Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&family=Space+Grotesk:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+<body class="is-landing">
+  <div id="app">
+
+    <!-- ── Header ─────────────────────────────────────────── -->
+    <header class="app-header">
+      <div class="header-brand">
+        <!-- Mobile: sidebar toggle -->
+        <button class="sidebar-toggle" id="sidebar-toggle-btn" title="Toggle schema sidebar" aria-label="Toggle sidebar">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="1" y="1" width="5" height="12" rx="1"/>
+            <line x1="9" y1="4" x2="13" y2="4"/>
+            <line x1="9" y1="7" x2="13" y2="7"/>
+            <line x1="9" y1="10" x2="13" y2="10"/>
+          </svg>
+        </button>
+        <div class="brand-titles">
+          <h1 class="brand-name">DataWise</h1>
+          <span class="brand-subtext">Business Intelligence, Locally</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div id="connection-status-badge" class="status-badge hidden">
+          <span class="status-dot"></span>
+          <span id="connection-status-text">Connected</span>
+        </div>
+        <button id="new-conv-btn" class="btn btn-outline hidden" title="Start a fresh question thread">
+          New thread
+        </button>
+        <button id="disconnect-btn" class="btn btn-outline hidden" title="Switch connection">
+          Disconnect
+        </button>
+      </div>
+    </header>
+
+    <!-- ── Connection Setup View ──────────────────────────── -->
+    <main id="connection-setup-view" class="setup-screen">
+
+      <!-- ── HERO ──────────────────────────────────────────── -->
+      <div class="hero-center">
+
+        <p class="hero-eyebrow anim-in" style="--anim-delay:0ms">
+          local · schema-agnostic · zero setup
+        </p>
+
+        <h2 class="hero-headline anim-in" style="--anim-delay:80ms">
+          Query Any Data<br>In Plain English
+        </h2>
+
+        <p class="hero-subhead anim-in" style="--anim-delay:170ms">
+          Connect any SQLAlchemy database or upload a CSV.
+          Ask business questions in natural language, get validated SQL,
+          plain-English answers, and charts. Runs entirely on a local LLM
+          via Ollama. Your data never leaves your machine.
+        </p>
+
+        <!-- Glowing CTA Button -->
+        <div class="hero-cta-wrap anim-in" style="--anim-delay:250ms">
+          <button type="button" id="hero-get-started-btn" class="btn-hero-cta">
+            <span>Get Started</span>
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.5 2v9M2.5 7l4 4 4-4"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Connection cards -->
+        <div class="setup-grid anim-in" id="setup-grid-section" style="--anim-delay:340ms">
+
+          <!-- DB Connection -->
+          <div class="hero-card" id="card-db">
+            <div class="hero-card-header">
+              <svg class="hero-card-glyph" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+              </svg>
+              <div class="hero-card-title-group">
+                <h3 class="hero-card-title">Database connection</h3>
+                <p class="hero-card-desc">PostgreSQL, MySQL, SQLite — any SQLAlchemy-compatible URL.</p>
+              </div>
+            </div>
+            <form id="db-connect-form">
+              <div class="form-group">
+                <label for="db-name">Connection name</label>
+                <input type="text" id="db-name" placeholder="e.g. Production Sales DB" required />
+              </div>
+              <div class="form-group">
+                <label for="db-conn-str">Connection string</label>
+                <input type="text" id="db-conn-str" placeholder="postgresql+psycopg://user:pass@host:5432/db" required />
+              </div>
+              <button type="submit" class="btn btn-connect" id="db-connect-btn">
+                <span>Connect Database</span>
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 7h8M8 3.5l3.5 3.5-3.5 3.5"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- CSV Upload -->
+          <div class="hero-card" id="card-csv">
+            <div class="hero-card-header">
+              <svg class="hero-card-glyph" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              <div class="hero-card-title-group">
+                <h3 class="hero-card-title">Upload CSV</h3>
+                <p class="hero-card-desc">Ingest a CSV into a local SQLite instance for instant analysis.</p>
+              </div>
+            </div>
+            <form id="csv-upload-form">
+              <div class="form-group">
+                <label for="csv-name">Dataset name</label>
+                <input type="text" id="csv-name" placeholder="e.g. Q3 Sales Records" required />
+              </div>
+              <div class="form-group">
+                <label for="csv-file">CSV file</label>
+                <div class="file-upload-zone" id="csv-upload-zone">
+                  <input type="file" id="csv-file" accept=".csv" required class="file-input-hidden" />
+                  <div class="file-upload-visual">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="file-upload-icon">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <span id="csv-file-name" class="file-upload-text">Choose .csv file or drag here</span>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-connect" id="csv-upload-btn">
+                <span>Upload &amp; Analyze</span>
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 7h8M8 3.5l3.5 3.5-3.5 3.5"/>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Existing connections -->
+        <div class="existing-connections-wrap anim-in" style="--anim-delay:420ms">
+          <div class="existing-connections-header">
+            <span class="existing-connections-title">Saved connections</span>
+            <span class="existing-connections-hint">select to resume</span>
+          </div>
+          <div id="existing-connections-list" class="connections-list">
+            <p class="text-muted">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STATS STRIP ────────────────────────────────────── -->
+      <div class="stats-strip anim-in" style="--anim-delay:500ms">
+        <div class="stat-item">
+          <span class="stat-number" data-target="3">0</span>
+          <span class="stat-label">SQL dialects<br><span class="stat-detail">SQLite · Postgres · MySQL</span></span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number" data-target="5">0</span>
+          <span class="stat-label">pipeline stages<br><span class="stat-detail">SQL → validate → run → interpret → chart</span></span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number stat-pct" data-target="100">0</span>
+          <span class="stat-label">local inference<br><span class="stat-detail">Ollama · no data leaves your machine</span></span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number stat-zero" data-target="0">$0</span>
+          <span class="stat-label">cost per query<br><span class="stat-detail">no API billing · runs on CPU</span></span>
+        </div>
+      </div>
+
+    </main>
+
+
+    <!-- ── Main App (Sidebar + Chat) ──────────────────────── -->
+    <main id="main-app-view" class="main-layout hidden">
+
+      <!-- Left Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title-group">
+            <h3>Schema</h3>
+            <span id="sidebar-dialect-badge" class="badge">sqlite</span>
+          </div>
+          <button id="generate-glossary-btn" class="btn btn-sm btn-secondary">
+            Glossary
+          </button>
+        </div>
+
+        <!-- Glossary generating notice -->
+        <div id="glossary-loading" class="notice-glossary hidden">
+          <span class="spinner-sm"></span>
+          Generating glossary… (LLM, may take 10–30 s)
+        </div>
+
+        <!-- Schema tree -->
+        <div id="schema-tree-container" class="schema-tree">
+          <p class="text-tertiary" style="padding: 12px 16px; font-size:12px;">Loading schema…</p>
+        </div>
+      </aside>
+
+      <!-- Chat Section -->
+      <section class="chat-section">
+
+        <!-- Messages area -->
+        <div id="chat-messages" class="chat-messages">
+          <!-- populated by app.js once connection state is known -->
+        </div>
+
+        <!-- Loading indicator -->
+        <div id="chat-loading-indicator" class="chat-loading hidden">
+          <div class="loading-row">
+            <div class="loading-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="loading-text-group">
+              <span id="loading-phase">Generating SQL…</span>
+              <span class="loading-subtext">Complex queries may take up to 2 min on CPU</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input bar -->
+        <div class="chat-input-bar">
+          <form id="chat-form" class="chat-form">
+            <textarea
+              id="question-input"
+              rows="1"
+              placeholder="Ask a business question about your data…"
+              required
+            ></textarea>
+            <button type="submit" id="ask-btn" class="btn btn-primary">Ask</button>
+          </form>
+        </div>
+
+      </section>
+    </main>
+
+  </div><!-- /#app -->
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
