@@ -1,8 +1,9 @@
 {
-  "version": 2,
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/static/:match*", "destination": "/:match*" },
-    { "source": "/demo-data/:match*", "destination": "/demo-data/:match*" },
-    { "source": "/api/:match*", "destination": "/api/:match*" }
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/demo-data/:path*", "destination": "/demo-data/:path*" },
+    { "source": "/static/:path*", "destination": "/static/:path*" },
+    { "source": "/((?!api|static|demo-data).*)", "destination": "/index.html" }
   ]
 }

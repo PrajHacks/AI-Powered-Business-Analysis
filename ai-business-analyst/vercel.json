@@ -1,0 +1,9 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/vercel-demo/api/:path*" },
+    { "source": "/demo-data/:path*", "destination": "/vercel-demo/demo-data/:path*" },
+    { "source": "/static/:path*", "destination": "/vercel-demo/public/static/:path*" },
+    { "source": "/((?!api|static|demo-data).*)", "destination": "/vercel-demo/public/index.html" }
+  ]
+}
